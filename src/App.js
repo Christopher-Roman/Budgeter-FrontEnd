@@ -1,26 +1,120 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import REACT_APP_URL from './Variables.js'
+import Register from './Register'
+import Login from './Login'
+import UserContainer from './UserContainer'
+import HeaderApp from './Header'
+require('./App.css')
 
-function App() {
+const My404 = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      Page not found.
     </div>
-  );
+  )
+}
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      username: '',
+      password: '',
+      loggedIn: false,
+      loginFail: false,
+      createBudget: false,
+      createItem: false,
+      register: false
+    }
+  }
+  handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      const logoutRequest = await fetch(REACT_APP_URL + '/users/logout', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const logoutRequestParsed = await logoutRequest.json();
+
+      if(logoutRequestParsed.status === 200) {
+        this.setState({
+          loggedIn: false,
+          loginFail: false
+        })
+      } else {
+        console.log('Logout Request Error -- ', logoutRequestParsed.error);
+      }
+    } catch(err) {
+      console.error(err)
+    }
+  }
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    const loginResponse = await fetch(REACT_APP_URL + '/users/login', {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify(this.state),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const parsedResponse = await loginResponse.json()
+    if(parsedResponse.status === 200) {
+      this.setState({
+        loggedIn: true,
+        loginFail: false,
+        register: false
+      })
+    } else if(parsedResponse.status === 401){
+      this.setState({
+        loginFail: true,
+        loggedIn: false,
+        register: false
+      })
+    }else {
+      this.setState({
+        loginFail: true,
+        loggedIn: false,
+        register: false
+      })
+    }
+  }
+  handleChange = (e) => {
+    this.setState({
+      [e.currentTarget.name]: e.currentTarget.value
+    })
+  }
+  register = (e) => {
+    e.preventDefault();
+    this.setState({
+      register: true
+    })
+  }
+  loggedIn = (e) => {
+    this.setState({
+      loggedIn: true,
+      register: false,
+      loginFail:false
+    })
+  }
+  render(){
+    return (
+      <div className='container'>
+        <div className='navbar'>
+            <HeaderApp userInfo={this.state} handleLogout={this.handleLogout}/>
+          <div>
+            {!this.state.loggedIn ? <Login registration={this.register} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> : <UserContainer userInfo={this.state} /> }
+
+            {this.state.loginFail || this.state.register ? <Register loggedIn={this.loggedIn} register={this.register} userInfo={this.state} /> : <div />}
+          </div>
+          
+        </div>
+      </div>
+    )
+  }
 }
 
 export default App;
