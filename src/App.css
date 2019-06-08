@@ -10,7 +10,13 @@ a {
   background-color: lightblue;
 }
 
-li {
+li.navbar {
   display: inline;
   float: right;
+}
+
+.budgetLabel {
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: underline;
 }

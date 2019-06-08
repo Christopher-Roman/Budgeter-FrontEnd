@@ -21,7 +21,6 @@ class Register extends Component {
 	    this.setState({
 	      [e.currentTarget.name]: e.currentTarget.value
 	    })
-	    console.log(this.state);
     }
     handleSubmit = async (e) => {
     	e.preventDefault();
@@ -47,7 +46,7 @@ class Register extends Component {
     	}
     }
     render(){
-    	let registration = <h6/>
+    	let registration = null
     	if(this.props.userInfo.loginFail === true) {
     		registration = <h6>Looks like the credentials you entered are incorrect. Do you need to make an account?</h6>
     		return (

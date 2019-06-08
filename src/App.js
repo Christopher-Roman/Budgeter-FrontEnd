@@ -6,13 +6,7 @@ import UserContainer from './UserContainer'
 import HeaderApp from './Header'
 require('./App.css')
 
-const My404 = () => {
-  return (
-    <div>
-      Page not found.
-    </div>
-  )
-}
+
 class App extends Component {
   constructor() {
     super()
@@ -21,8 +15,6 @@ class App extends Component {
       password: '',
       loggedIn: false,
       loginFail: false,
-      createBudget: false,
-      createItem: false,
       register: false
     }
   }
@@ -90,7 +82,8 @@ class App extends Component {
   register = (e) => {
     e.preventDefault();
     this.setState({
-      register: true
+      register: true,
+      loginFail: false
     })
   }
   loggedIn = (e) => {
@@ -106,7 +99,7 @@ class App extends Component {
         <div className='navbar'>
             <HeaderApp userInfo={this.state} handleLogout={this.handleLogout}/>
           <div>
-            {!this.state.loggedIn ? <Login registration={this.register} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> : <UserContainer userInfo={this.state} /> }
+            {!this.state.loggedIn ? <Login registration={this.register} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> : <UserContainer handleChange={this.handleChange} userInfo={this.state} /> }
 
             {this.state.loginFail || this.state.register ? <Register loggedIn={this.loggedIn} register={this.register} userInfo={this.state} /> : <div />}
           </div>
