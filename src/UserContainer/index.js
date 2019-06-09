@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-modal'
 import REACT_APP_URL from '../Variables.js'
 import Budget from '../Budget'
+import BudgetView from '../BudgetView'
 require('../App.css')
 
 
@@ -28,7 +29,14 @@ class UserContainer extends Component {
 			budgetItems: [],
 			activeBudget: false,
       		createBudget: false,
-      		createItem: false
+      		createItem: false,
+      		budgetViewModal: false,
+      		budgetToView: {
+      			budgetName: '',
+      			netMonthlyIncome: '',
+      			budgetItems: [],
+      			budgetScenarios: []
+      		}
 		}
 	}
 	getBudget = async () => {
@@ -69,6 +77,35 @@ class UserContainer extends Component {
 			createItem: false
 		})
 	}
+	openBudget = async (budget) => {
+		try {
+			const selectedBudget = fetch(REACT_APP_URL + '/budget/' + budget._id, {
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			const parsedResponse = await selectedBudget.json()
+			return parsedResponse
+		} catch(err) {
+			console.error(err)
+		}
+	}
+	budgetViewToggle = (budget) => {
+		if(!this.state.budgetViewModal) {
+			this.setState({
+				budgetViewModal: true,
+				budgetToView: {
+					...budget
+				}
+			})
+		} else {
+			this.setState({
+				budgetViewModal: false
+			})
+		}
+	}
 	newBudget = async (e) => {
 		e.preventDefault();
 		console.log('Route was hit!');
@@ -107,7 +144,8 @@ class UserContainer extends Component {
 			<div>
 				<div>
 					{this.state.activeBudget ? <span>Hello, {this.props.userInfo.username}, ready to get started on a new budget?</span> : <span>Hello, {this.props.userInfo.username}, ready to continue working on your budget?</span>}
-				<Budget userInfo={this.props.userInfo} budgetInfo={this.state.budgets} />
+				<Budget userInfo={this.props.userInfo} budgetInfo={this.state.budgets} openBudget={this.budgetViewToggle} budgetViewModal={this.state.budgetViewModal} />
+				{this.state.budgetViewModal ? <BudgetView budgetViewToggle={this.budgetViewToggle} budgetToView={this.state.budgetToView} budgetViewModal={this.state.budgetViewModal}/> : null}
 				</div>
 				<br/>
 				<br/>
