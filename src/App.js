@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import REACT_APP_URL from './Variables.js'
 import Register from './Register'
 import Login from './Login'
-import UserContainer from './UserContainer'
+import BudgetContainer from './BudgetContainer'
 import HeaderApp from './Header'
 require('./App.css')
 
@@ -99,7 +99,7 @@ class App extends Component {
         <div className='navbar'>
             <HeaderApp userInfo={this.state} handleLogout={this.handleLogout}/>
           <div>
-            {!this.state.loggedIn ? <Login registration={this.register} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> : <UserContainer handleChange={this.handleChange} userInfo={this.state} /> }
+            {!this.state.loggedIn ? <Login registration={this.register} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> : <BudgetContainer handleChange={this.handleChange} userInfo={this.state} /> }
 
             {this.state.loginFail || this.state.register ? <Register loggedIn={this.loggedIn} register={this.register} userInfo={this.state} /> : <div />}
           </div>

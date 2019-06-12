@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import REACT_APP_URL from '../Variables.js'
-import UserContainer from '../UserContainer'
+import BudgetContainer from '../BudgetContainer'
 require('../App.css')
 
 class Register extends Component {
@@ -37,8 +37,9 @@ class Register extends Component {
      		this.setState({
         		isValid: true,
         		register: false
-        	})
-        	this.props.loggedIn()
+        	}, () => {
+        	   this.props.loggedIn()
+            })
     		console.log('Registration successful');
     	} else {
     		this.registrationFailed()
@@ -75,7 +76,7 @@ class Register extends Component {
     		)
     	} else {
     		return (
-    		<UserContainer />
+    		<BudgetContainer />
     		)
     	}
     }

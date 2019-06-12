@@ -3,34 +3,32 @@ import Modal from 'react-modal'
 import REACT_APP_URL from '../Variables.js'
 require('../App.css')
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
-
 Modal.setAppElement('#root')
 
+
+
 class BudgetView extends Component {
+	_isMounted = false;
+
 	constructor(props){
-		super();
+		super(props);
 		this.state = {
 			budgetId: props.budgetToView._id,
 			itemName: '',
 			itemAmount: '',
-			budgetItems: []
+			budgetItems: [],
+
 		}
 	}
 	componentDidMount(){
+		console.log(this.props.budgetToView.budgetItem);
+		this._isMounted = true
 		this.getBudget().then(budget => {
 			if(budget.status === 200) {
 				this.setState({
 					budgetItems: [...budget.data.budgetItem]
+				}, () => {
+					this.componentDidUpdate()
 				})
 			} else {
 				this.setState({
@@ -38,6 +36,24 @@ class BudgetView extends Component {
 				})
 			}
 		})
+	}
+	componentDidUpdate() {
+		if(this._isMounted === true) {
+			this.getBudget().then(budget => {
+				if(budget.status === 200 && this._isMounted === true) {
+					this.setState({
+						budgetItems: [...budget.data.budgetItem]
+					})
+				} else if (budget.status !== 200 && this._isMounted === true) {
+					this.setState({
+						budgetItem: []
+					})
+				}
+			})
+		}
+	}
+	componentWillUnmount() {
+		this._isMounted = false
 	}
 	getBudget = async () => {
 		const budget = await fetch(REACT_APP_URL + '/budget/' + this.state.budgetId, {
@@ -67,9 +83,10 @@ class BudgetView extends Component {
 			})
 			console.log(newBudgetItem);
 			const parsedBudgetItem = await newBudgetItem.json()
-			console.log(parsedBudgetItem);
-			this.setState({
-				budgetItems: [...this.state.budgetItems, parsedBudgetItem.data]
+			await this.setState({
+				budgetItems: [...this.state.budgetItems, parsedBudgetItem.data],
+				itemName: '',
+				itemAmount: ''
 			})
 		} catch(err) {
 			console.error(err)
@@ -86,15 +103,14 @@ class BudgetView extends Component {
 					<div key={budgetItems._id}>
 						<div className="card">
 						  <div className="container">
-						    <b>Item: {budgetItems.itemName}</b> 
+						    <b>Item:</b> {budgetItems.itemName} 
 						    <br/>
-						    <b>Cost: {budgetItems.amount}</b> 
+						    <b>Cost:</b> {budgetItems.amount} 
 						  </div>
 						</div>
 					</div>
 				)
 			})
-		let budgetViewModal = this.props.budgetViewModal
 		
 		return (
 			<Modal 
@@ -104,7 +120,9 @@ class BudgetView extends Component {
 		      	<div>{this.props.budgetToView.netMonthlyIncome}</div>
 				<label className='budgetLabel'>Budget:</label>
 				<br/>
+				<br/>
 	      		{budgetItems}
+		      	<br/>
 		      	<br/>
 		      	<form onSubmit={this.createBudgetItem}>
 		      		<label>Item Name</label>

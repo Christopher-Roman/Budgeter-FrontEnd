@@ -19,7 +19,7 @@ const customStyles = {
 
 Modal.setAppElement('#root')
 
-class UserContainer extends Component {
+class BudgetContainer extends Component {
 	constructor(){
 		super();
 		this.state = {
@@ -64,17 +64,30 @@ class UserContainer extends Component {
 				})
 			}
 		})
+	}
+	componentWillUpdate() {
+		this.getBudget().then(budgets => {
+			if(budgets.status === 200) {
+				let budgetArray = budgets.data[0].budget
+				this.setState({
+					budgets: [...budgetArray],
+					activeBudget: true
+				})
+			} else {
+				this.setState({
+					activeBudget:false
+				})
+			}
+		})
 	} 
-	createBudgetModal = () => {
+	openBudgetModal = () => {
 		this.setState({
-			createBudget: true,
-			createItem: false
+			createBudget: true
 		})
 	}
 	closeBudgetModal = () => {
 		this.setState({
-			createBudget: false,
-			createItem: false
+			createBudget: false
 		})
 	}
 	openBudget = async (budget) => {
@@ -108,7 +121,6 @@ class UserContainer extends Component {
 	}
 	newBudget = async (e) => {
 		e.preventDefault();
-		console.log('Route was hit!');
 		try {
 			let incomeParsed = parseInt(this.state.netMonthlyIncome)
 			const newBudget = await fetch(REACT_APP_URL + '/budget/new', {
@@ -127,12 +139,26 @@ class UserContainer extends Component {
 				budgets: [...this.state.budgets, newBudgetParsed.data],
 				createBudget: false
 			})
-			console.log(this.state.budgets);
 
 		} catch(err) {
 			console.error(err);
-			throw err
 		}
+	}
+	deleteBudget = async (id) => {
+		try {
+			const deletedBudget = await fetch(REACT_APP_URL + '/budget/delete/' + id, {
+				method: 'DELETE',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			this.setState({
+				budgets: this.state.budgets.filter((budget) => budget.id !== id)
+			})
+		} catch(err) {
+			console.error(err)
+		}	
 	}
 	handleChange = (e) => {
 	    this.setState({
@@ -144,13 +170,13 @@ class UserContainer extends Component {
 			<div>
 				<div>
 					{this.state.activeBudget ? <span>Hello, {this.props.userInfo.username}, ready to get started on a new budget?</span> : <span>Hello, {this.props.userInfo.username}, ready to continue working on your budget?</span>}
-				<Budget userInfo={this.props.userInfo} budgetInfo={this.state.budgets} openBudget={this.budgetViewToggle} budgetViewModal={this.state.budgetViewModal} />
-				{this.state.budgetViewModal ? <BudgetView budgetViewToggle={this.budgetViewToggle} budgetToView={this.state.budgetToView} budgetViewModal={this.state.budgetViewModal}/> : null}
+				<Budget userInfo={this.props.userInfo} budgetInfo={this.state.budgets} openBudget={this.budgetViewToggle} budgetViewModal={this.state.budgetViewModal} deleteBudget={this.deleteBudget} />
+				{this.state.budgetViewModal ? <BudgetView budgetViewToggle={this.budgetViewToggle} budgetToView={this.state.budgetToView} budgetViewModal={this.state.budgetViewModal} /> : null}
 				</div>
 				<br/>
 				<br/>
 				<br/>
-				<button onClick={this.createBudgetModal}>Create New Budget?</button>
+				<button onClick={this.openBudgetModal}>Create New Budget?</button>
 				<Modal 
 					isOpen={this.state.createBudget} 
 					style={customStyles}
@@ -175,4 +201,4 @@ class UserContainer extends Component {
 	}
 }
 
-export default UserContainer;
+export default BudgetContainer;
