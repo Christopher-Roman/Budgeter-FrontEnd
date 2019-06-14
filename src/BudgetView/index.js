@@ -63,7 +63,6 @@ class BudgetView extends Component {
 					'Content-Type': 'application/json'
 				}
 			})
-			console.log(newBudgetItem);
 			const parsedBudgetItem = await newBudgetItem.json()
 
 			this.setState({
