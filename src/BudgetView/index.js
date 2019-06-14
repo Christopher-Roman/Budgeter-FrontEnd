@@ -38,7 +38,7 @@ class BudgetView extends Component {
 		})
 	}
 	getBudget = async () => {
-		const budget = await fetch(REACT_APP_URL + '/budget/' + this.state.budgetId, {
+		const budget = await fetch(process.env.REACT_APP_URL + '/budget/' + this.state.budgetId, {
 			method: 'GET',
 			'credentials': 'include',
 			headers: {
