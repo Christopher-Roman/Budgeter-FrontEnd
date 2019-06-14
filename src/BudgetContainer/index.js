@@ -121,7 +121,7 @@ class BudgetContainer extends Component {
 		e.preventDefault();
 		try {
 			let incomeParsed = parseInt(this.state.netMonthlyIncome)
-			const newBudget = await fetch(REACT_APP_URL + '/budget/new', {
+			const newBudget = await fetch(process.env.REACT_APP_URL + '/budget/new', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify({
