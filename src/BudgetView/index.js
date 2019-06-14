@@ -3,12 +3,17 @@ import Modal from 'react-modal'
 import REACT_APP_URL from '../Variables.js'
 require('../App.css')
 
+const customStyles = {
+  content : {
+    backgroundColor		  : 'rgba(69,179,224)'
+  }
+};
+
 Modal.setAppElement('#root')
 
 
 
 class BudgetView extends Component {
-	_isMounted = false;
 
 	constructor(props){
 		super(props);
@@ -17,18 +22,14 @@ class BudgetView extends Component {
 			itemName: '',
 			itemAmount: '',
 			budgetItems: [],
-
+			createItem: false
 		}
 	}
 	componentDidMount(){
-		console.log(this.props.budgetToView.budgetItem);
-		this._isMounted = true
 		this.getBudget().then(budget => {
 			if(budget.status === 200) {
 				this.setState({
 					budgetItems: [...budget.data.budgetItem]
-				}, () => {
-					this.componentDidUpdate()
 				})
 			} else {
 				this.setState({
@@ -36,24 +37,6 @@ class BudgetView extends Component {
 				})
 			}
 		})
-	}
-	componentDidUpdate() {
-		if(this._isMounted === true) {
-			this.getBudget().then(budget => {
-				if(budget.status === 200 && this._isMounted === true) {
-					this.setState({
-						budgetItems: [...budget.data.budgetItem]
-					})
-				} else if (budget.status !== 200 && this._isMounted === true) {
-					this.setState({
-						budgetItem: []
-					})
-				}
-			})
-		}
-	}
-	componentWillUnmount() {
-		this._isMounted = false
 	}
 	getBudget = async () => {
 		const budget = await fetch(REACT_APP_URL + '/budget/' + this.state.budgetId, {
@@ -83,11 +66,14 @@ class BudgetView extends Component {
 			})
 			console.log(newBudgetItem);
 			const parsedBudgetItem = await newBudgetItem.json()
-			await this.setState({
-				budgetItems: [...this.state.budgetItems, parsedBudgetItem.data],
+
+			this.setState({
+				budgetItems: [...parsedBudgetItem.data.budgetItem],
 				itemName: '',
-				itemAmount: ''
+				itemAmount: '',
+				createItem: false
 			})
+
 		} catch(err) {
 			console.error(err)
 		}
@@ -97,15 +83,27 @@ class BudgetView extends Component {
 	      [e.currentTarget.name]: e.currentTarget.value
 	    })
   	}
+  	createItemToggle = () => {
+  		if(this.state.createItem) {
+  			this.setState({
+  				createItem: false
+  			})
+  		} else {
+  			this.setState({
+  				createItem: true
+  			})
+  		}
+  	}
 	render() {
+
 		const budgetItems = this.state.budgetItems.map((budgetItems) => {
 				return (
 					<div key={budgetItems._id}>
-						<div className="card">
-						  <div className="container">
-						    <b>Item:</b> {budgetItems.itemName} 
+						<div className="itemCard">
+						  <div className="itemContainer">
+						    <b>Item:</b> <span> </span>{budgetItems.itemName} 
 						    <br/>
-						    <b>Cost:</b> {budgetItems.amount} 
+						    <b>Cost:</b> <span> </span>{budgetItems.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })} 
 						  </div>
 						</div>
 					</div>
@@ -114,16 +112,39 @@ class BudgetView extends Component {
 		
 		return (
 			<Modal 
+				closeTimeoutMS={1000}
 				isOpen={this.props.budgetViewModal} 
+				style={customStyles}
 				onRequestClose={this.props.budgetViewToggle}>
-				<div>{this.props.budgetToView.budgetName}</div>
-		      	<div>{this.props.budgetToView.netMonthlyIncome}</div>
-				<label className='budgetLabel'>Budget:</label>
+				<div className='closeContainer'>
+					<div className='closeModal'>
+						<button className='modalClose' onClick={this.props.budgetViewToggle}>X</button>
+					</div>
+				</div>
+				<div className='budgetInfoCard'>
+					<div className='budgetInfoContainer'>
+						<span className='income'>Budget Name:</span>
+		      			<br/>
+						<div className='info'>
+							<span>{this.props.budgetToView.budgetName}</span>
+						</div>
+		      			<br/>
+						<span className='income'>Net Income:</span>
+		      			<br/>
+				      	<div className='info'>
+				      		<span>{this.props.budgetToView.netMonthlyIncome.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })}</span>
+				      	</div>
+			      	</div>
+			    </div>
+		      	<br/>
+				<br/>
+				<label className='budgetLabel'>Expenses:</label>
 				<br/>
 				<br/>
 	      		{budgetItems}
 		      	<br/>
 		      	<br/>
+		      	{this.state.createItem ?
 		      	<form onSubmit={this.createBudgetItem}>
 		      		<label>Item Name</label>
 		      		<br/>
@@ -135,8 +156,7 @@ class BudgetView extends Component {
 		      		<br/>
 		      		<input type='submit'/>
 		      	</form>
-
-		      	<button onClick={this.props.budgetViewToggle}>close</button>
+		      	: <button onClick={this.createItemToggle}>Add an Expense?</button>}
 		    </Modal>
 		)
 	}

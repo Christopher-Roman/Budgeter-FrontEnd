@@ -93,18 +93,25 @@ class App extends Component {
       loginFail:false
     })
   }
+  haveAnAccount = (e) => {
+    this.setState({
+      register: false,
+      loginFail: false
+    })
+  }
   render(){
     return (
-      <div className='container'>
-        <div className='navbar'>
-            <HeaderApp userInfo={this.state} handleLogout={this.handleLogout}/>
-          <div>
-            {!this.state.loggedIn ? <Login registration={this.register} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> : <BudgetContainer handleChange={this.handleChange} userInfo={this.state} /> }
-
-            {this.state.loginFail || this.state.register ? <Register loggedIn={this.loggedIn} register={this.register} userInfo={this.state} /> : <div />}
+      <div>
+        <div >
+          <div className='navbar'>
+              <HeaderApp userInfo={this.state} handleLogout={this.handleLogout}/>
           </div>
-          
         </div>
+          <div className='container'>
+            {!this.state.loggedIn && !this.state.loginFail && !this.state.register ? <Login registration={this.register} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> : null }
+            {this.state.register || this.state.loginFail ? <Register haveAnAccount={this.haveAnAccount} loggedIn={this.loggedIn} register={this.register} userInfo={this.state} /> : null}
+            {this.state.loggedIn && !this.state.loginFail && !this.state.register ? <BudgetContainer handleChange={this.handleChange} userInfo={this.state} /> : null }
+          </div>
       </div>
     )
   }

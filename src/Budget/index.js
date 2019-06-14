@@ -12,23 +12,24 @@ const Budget = (props) => {
 		const budgets = foundBudgets.map((budget) => {
 			return (
 				<div key={budget._id}>
-					<div className="card">
-						<div className='container'>
+					<div className="budgetCard">
+						<div className='budgetContainer'>
 							<label className='budgetLabel'>Budget:</label>
 							<br/>
-							{budget.budgetName}
+							<span className='budgetName'>{budget.budgetName}</span>
 							<br/>
 							<br/>
-							<button className='viewBudget' onClick={props.openBudget.bind(null, budget)}>View</button>
-							<button className='delete' onClick={props.deleteBudget.bind(null, budget._id)}>Delete</button>
+							<div className='buttonContainer'>
+								<button className='viewBudget' onClick={props.openBudget.bind(null, budget)}>View</button>
+								<button className='delete' onClick={props.deleteBudget.bind(null, budget._id)}>Delete</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			)
 		})
 			return (
-				<div>
-					Should we get started?
+				<div className='loginContainer'>
 					{response}
 					<br/>
 					{budgets}

@@ -13,13 +13,15 @@ const customStyles = {
     right                 : 'auto',
     bottom                : 'auto',
     marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+    transform             : 'translate(-50%, -50%)',
+    backgroundColor		  : 'rgba(69,179,224)'
   }
 };
 
 Modal.setAppElement('#root')
 
 class BudgetContainer extends Component {
+	_isMounted = false;
 	constructor(){
 		super();
 		this.state = {
@@ -73,10 +75,6 @@ class BudgetContainer extends Component {
 					budgets: [...budgetArray],
 					activeBudget: true
 				})
-			} else {
-				this.setState({
-					activeBudget:false
-				})
 			}
 		})
 	} 
@@ -99,7 +97,8 @@ class BudgetContainer extends Component {
 					'Content-Type': 'application/json'
 				}
 			})
-			const parsedResponse = await selectedBudget.json()
+			let parsedResponse = await selectedBudget.json()
+			
 			return parsedResponse
 		} catch(err) {
 			console.error(err)
@@ -168,16 +167,19 @@ class BudgetContainer extends Component {
 	render() {
 		return (
 			<div>
-				<div>
+				<div className='welcomeCard'>
+					<div className='welcomeContainer' >
 					{this.state.activeBudget ? <span>Hello, {this.props.userInfo.username}, ready to get started on a new budget?</span> : <span>Hello, {this.props.userInfo.username}, ready to continue working on your budget?</span>}
+					</div>
+				</div>
 				<Budget userInfo={this.props.userInfo} budgetInfo={this.state.budgets} openBudget={this.budgetViewToggle} budgetViewModal={this.state.budgetViewModal} deleteBudget={this.deleteBudget} />
 				{this.state.budgetViewModal ? <BudgetView budgetViewToggle={this.budgetViewToggle} budgetToView={this.state.budgetToView} budgetViewModal={this.state.budgetViewModal} /> : null}
-				</div>
+				
 				<br/>
 				<br/>
 				<br/>
-				<button onClick={this.openBudgetModal}>Create New Budget?</button>
-				<Modal 
+				<button className='newBudget' onClick={this.openBudgetModal}>Create New Budget?</button>
+				<Modal
 					isOpen={this.state.createBudget} 
 					style={customStyles}
 					onRequestClose={this.closeBudgetModal}>

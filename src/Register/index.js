@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import REACT_APP_URL from '../Variables.js'
-import BudgetContainer from '../BudgetContainer'
 require('../App.css')
 
 class Register extends Component {
@@ -46,39 +45,49 @@ class Register extends Component {
     		console.log('Could Not Register. Please try again.');
     	}
     }
-    render(){
-    	let registration = null
+    render(){   
     	if(this.props.userInfo.loginFail === true) {
-    		registration = <h6>Looks like the credentials you entered are incorrect. Do you need to make an account?</h6>
     		return (
 		      <div>
-		      <br/>
-		      	{registration}
-		        <form onSubmit={this.handleSubmit}>
-		          <input name='username' placeholder='Username' type='text' onChange={this.handleChange}></input>
-		          <input name='password' placeholder='Password' type='password' onChange={this.handleChange}></input>
-		          <button>Submit</button>
-		        </form>
-		      </div>
+                <h6>Looks like the credentials you entered are incorrect. Do you need to make an account?</h6>
+                    <div is="custom-elem" class='registerCard'>
+                        <div is="custom-elem" class='registerContainer'>
+                            <h1>Register</h1>
+                            <form onSubmit={this.handleSubmit}>
+                              <input name='username' placeholder='Username' type='text' onChange={this.handleChange}></input>
+                              <br/>
+                              <br/>
+                              <input name='password' placeholder='Password' type='password' onChange={this.handleChange}></input>
+                              <br/>
+                              <br/>
+                              <button is="custom-elem" class='register'>Submit</button>
+                            </form>
+                            <h6>Have an Account? <button className='register' onClick={this.props.haveAnAccount}>Close</button></h6>
+                        </div>
+                    </div>
+                </div>
 	    	)
     	} else if(this.props.userInfo.loginFail === false && this.props.userInfo.register === true) {
-    		registration = <h6>Please register using the form below.</h6>
     		return (
     			<div>
-    			{registration}
-	    			<form onSubmit={this.handleSubmit}>
-			          <input name='username' placeholder='Username' type='text' onChange={this.handleChange}></input>
-			          <input name='password' placeholder='Password' type='password' onChange={this.handleChange}></input>
-			          <button>Submit</button>
-			        </form>
+                    <div is="custom-elem" class='registerCard'>
+                        <div is="custom-elem" class='registerContainer'>
+                            <h1>Register</h1>
+        	    			<form onSubmit={this.handleSubmit}>
+        			          <input name='username' placeholder='Username' type='text' onChange={this.handleChange}></input>
+        			          <br/>
+                              <br/>
+                              <input name='password' placeholder='Password' type='password' onChange={this.handleChange}></input>
+        			          <br/>
+                              <br/>
+                              <button is="custom-elem" class='register'>Submit</button>
+        			        </form>
+                            <h6>Have an Account? <button className='register' onClick={this.props.haveAnAccount}>Close</button></h6>
+                        </div>
+                    </div>
 			    </div>
-
     		)
-    	} else {
-    		return (
-    		<BudgetContainer />
-    		)
-    	}
+    	} 
     }
 }
 

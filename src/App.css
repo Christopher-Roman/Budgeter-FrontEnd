@@ -1,3 +1,7 @@
+body {
+  background-color: #87ceeb;
+}
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -7,12 +11,20 @@ ul {
 a {
   display: block;
   padding: 8px;
-  background-color: lightblue;
+  background-color: #c9e9f6;
 }
 
-li.navbar {
+li.navbar, .closeContainer {
   display: inline;
   float: right;
+  padding-right:15px;
+  padding-top: 10px;
+}
+
+.modalClose {
+  font-size: 100%;
+  border: 0;
+  padding: 0;
 }
 
 .budgetLabel {
@@ -21,33 +33,81 @@ li.navbar {
 	text-decoration: underline;
 }
 
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+.itemCard, .card {
   transition: 0.3s;
   min-width: 100px;
   max-height: 100px;
-  border: 1px black solid;
+  border: 5px #c9e9f6 solid;
   display: inline-block;
-  text-align: center;
-  padding-top: 5px;
-  padding-bottom: 0px;
+  padding-right: 8px;
+  background-color: #45b3e0;
 }
 
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
-  background-color: slategrey;
-  color: white;
+.budgetCard {
+  transition: 0.3s;
+  min-width: 100px;
+  max-height: 110px;
+  border: 5px #c9e9f6 solid;
+  display: inline-block;
+  padding-right: 8px;
+  background-color: #45b3e0;
 }
 
-.container {
+.welcomeCard {
+  border: 5px #c9e9f6 solid;
+  display: inline-block;
+  padding-right: 8px;
+  background-color: #45b3e0;
+}
+
+.budgetInfoCard{
+  transition: 0.3s;
+  border: 5px #c9e9f6 solid;
+  display: inline-block;
+  padding-right: 8px;
+  background-color: #45b3e0;
+  text-align: left;
+}
+
+.budgetCard:hover, .itemCard:hover, .card:hover {
+  background-color: #c9e9f6;
+  color: #87ceeb;
+}
+
+.container, .loginContainer, .itemContainer, .registerContainer, .budgetContainer, .loginContainer, .welcomeContainer {
   padding: 2px 5px;
+  text-align: center;
+  display: table;
+  width: 100%;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.budgetInfoContainer {
+  padding-top: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  max-width: 150px;
+  text-align: center;
+  display: table;
+  width: 140px;
+}
+
+.itemContainer {
+  padding: 2px 5px;
+  text-align: center;
+  display: table;
+  width: 140px;
 }
 
 .viewBudget, .delete {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
-  width: 50%;
-  padding: 10px;
+  width: 49%;
+  padding: 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -55,22 +115,156 @@ li.navbar {
   background-color: white
 }
 
-.viewBudget:hover {
+.newBudget {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width: 200px  ;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  background-color: white
+}
+
+.viewBudget:hover, .newBudget:hover {
+  box-shadow: 0 8px 16px 0 #87ceeb;
   background-color: #4CAF50;
+  font-size: 15px;
   color: white;
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  font-weight: bold;
+}
+
+.budgetContainer:hover span, .budgetContainer:hover label, .budgetContainer:hover{
+  font-size: 15px;
+  color: black;
+  font-weight: bold;
+
+}
+
+.logout {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width: 80px;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  background-color: #45b3e0;
+  color: #f3fafd;
+  border: 3px solid #c9e9f6;
+}
+
+.logout:hover {
+  background-color: red;
+  font-size: 15px;
+  color: white;
+  font-weight: bold;
+}
+
+.budgetContainer:hover {
+  background-color: #c9e9f6;
+  color: white;
 }
 
 .delete:hover {
+  box-shadow: 0 8px 16px 0 #87ceeb;
   background-color: red;
+  font-size: 15px;
   color: white;
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  font-weight: bold;
 }
 
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: 700ms ease-in-out;
+}
 
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+}
 
+.ReactModal__Overlay--before-close{
+    opacity: 0;
+}
 
+.login  {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width: 80px;
+  padding: 1px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  background-color: #c9e9f6;
+}
 
+.register {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width: 80px;
+  padding: 1px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  background-color: #45b3e0;
+}
+
+.login:hover {
+  font-size: 15px;
+  color: black;
+  font-weight: bold;
+  background-color: #c9e9f6; 
+}
+
+.register:hover {
+  font-size: 15px;
+  color: black;
+  font-weight: bold;
+  background-color: #45b3e0; 
+}
+
+.loginCard {
+  transition: 0.3s;
+  background-color: #45b3e0;
+  display: inline-block;
+  border: 15px #c9e9f6 solid;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 0px;
+  width: 25%;
+  height: 33%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.registerCard {
+  transition: 0.3s;
+  background-color: #c9e9f6;
+  display: inline-block;
+  border: 15px #45b3e0 solid;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 0px;
+  width: 25%;
+  height: 33%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.income {
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+.info {
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
 
 
 
