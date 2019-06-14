@@ -140,8 +140,10 @@ class BudgetContainer extends Component {
 					'Content-Type': 'application/json'
 				}
 			})
+			const parsedResponse = await deletedBudget.json()
+			console.log(parsedResponse);
 			this.setState({
-				budgets: this.state.budgets.filter((budget) => budget.id !== id)
+				budgets: [...parsedResponse.data.budget]
 			})
 		} catch(err) {
 			console.error(err)
