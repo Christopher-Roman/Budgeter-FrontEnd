@@ -1,11 +1,11 @@
 {
   "name": "budgeter",
   "version": "0.1.0",
+  "engines": {
+    "node": "10.3.0"
+  },
   "private": true,
   "dependencies": {
-    "animate.css": "^3.7.2",
-    "audit": "0.0.6",
-    "fix": "0.0.6",
     "node": "11.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
