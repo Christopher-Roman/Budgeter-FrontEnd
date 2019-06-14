@@ -65,17 +65,6 @@ class BudgetContainer extends Component {
 				})
 			}
 		})
-	}
-	componentWillUpdate() {
-		this.getBudget().then(budgets => {
-			if(budgets.status === 200) {
-				let budgetArray = budgets.data[0].budget
-				this.setState({
-					budgets: [...budgetArray],
-					activeBudget: true
-				})
-			}
-		})
 	} 
 	openBudgetModal = () => {
 		this.setState({
