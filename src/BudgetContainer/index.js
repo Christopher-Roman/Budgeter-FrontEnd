@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal'
-import REACT_APP_URL from '../Variables.js'
 import Budget from '../Budget'
 import BudgetView from '../BudgetView'
 require('../App.css')
@@ -42,7 +41,7 @@ class BudgetContainer extends Component {
 		}
 	}
 	getBudget = async () => {
-		const budget = await fetch(REACT_APP_URL + '/budget', {
+		const budget = await fetch(process.env.REACT_APP_URL + '/budget', {
 			method: 'GET',
 			'credentials': 'include',
 			headers: {
@@ -90,7 +89,7 @@ class BudgetContainer extends Component {
 	}
 	openBudget = async (budget) => {
 		try {
-			const selectedBudget = fetch(REACT_APP_URL + '/budget/' + budget._id, {
+			const selectedBudget = fetch(process.env.REACT_APP_URL + '/budget/' + budget._id, {
 				method: 'GET',
 				credentials: 'include',
 				headers: {
@@ -145,7 +144,7 @@ class BudgetContainer extends Component {
 	}
 	deleteBudget = async (id) => {
 		try {
-			const deletedBudget = await fetch(REACT_APP_URL + '/budget/delete/' + id, {
+			const deletedBudget = await fetch(process.env.REACT_APP_URL + '/budget/delete/' + id, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {

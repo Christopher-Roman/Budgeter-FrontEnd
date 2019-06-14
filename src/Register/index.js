@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import REACT_APP_URL from '../Variables.js'
 require('../App.css')
 
 class Register extends Component {
@@ -23,7 +22,7 @@ class Register extends Component {
     }
     handleSubmit = async (e) => {
     	e.preventDefault();
-    	const registerResponse = await fetch(REACT_APP_URL + '/users/register', {
+    	const registerResponse = await fetch(process.env.REACT_APP_URL + '/users/register', {
     		method: 'POST',
     		credentials: 'include',
     		body: JSON.stringify(this.state),

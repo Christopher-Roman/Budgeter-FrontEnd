@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal'
-import REACT_APP_URL from '../Variables.js'
 require('../App.css')
 
 const customStyles = {
@@ -53,7 +52,7 @@ class BudgetView extends Component {
 		e.preventDefault();
 		try {
 			let cost = parseInt(this.state.itemAmount)
-			const newBudgetItem = await fetch(REACT_APP_URL + '/budget/' + this.state.budgetId + '/item/new', {
+			const newBudgetItem = await fetch(process.env.REACT_APP_URL + '/budget/' + this.state.budgetId + '/item/new', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify({

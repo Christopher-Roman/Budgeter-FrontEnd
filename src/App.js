@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import REACT_APP_URL from './Variables.js'
 import Register from './Register'
 import Login from './Login'
 import BudgetContainer from './BudgetContainer'
@@ -21,7 +20,7 @@ class App extends Component {
   handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const logoutRequest = await fetch(REACT_APP_URL + '/users/logout', {
+      const logoutRequest = await fetch(process.env.REACT_APP_URL + '/users/logout', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -45,7 +44,7 @@ class App extends Component {
   }
   handleSubmit = async (e) => {
     e.preventDefault();
-    const loginResponse = await fetch(REACT_APP_URL + '/users/login', {
+    const loginResponse = await fetch(process.env.REACT_APP_URL + '/users/login', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(this.state),
