@@ -22,9 +22,20 @@ li.navbar, .closeContainer {
 }
 
 .modalClose {
-  font-size: 100%;
-  border: 0;
-  padding: 0;
+  border: 0px;
+  padding-right: 3px;
+  padding-left: 3px;
+  font-size: 40px;
+  background-color: #45b3e0;
+  color: #c9e9f6;
+  transform: rotate(45deg);
+  transition: 0.5s;
+}
+
+.modalClose:hover {
+  transition: 0.5s;
+  font-weight: bold;
+  font-size: 50px;
 }
 
 .budgetLabel {
@@ -60,7 +71,7 @@ li.navbar, .closeContainer {
   background-color: #45b3e0;
 }
 
-.budgetInfoCard{
+.budgetInfoCard, .budgetCalcCard {
   transition: 0.3s;
   border: 5px #c9e9f6 solid;
   display: inline-block;
@@ -74,11 +85,15 @@ li.navbar, .closeContainer {
   color: #87ceeb;
 }
 
-.container, .loginContainer, .itemContainer, .registerContainer, .budgetContainer, .loginContainer, .welcomeContainer {
+.container, .loginContainer, .itemContainer, .registerContainer, .budgetContainer, .loginContainer, .welcomeContainer, .budgetCalcInfoContainer, .newItemForm {
   padding: 2px 5px;
   text-align: center;
   display: table;
   width: 100%;
+}
+
+.closeContainer {
+  padding-bottom: 15px;
 }
 
 .buttonContainer {
@@ -115,6 +130,29 @@ li.navbar, .closeContainer {
   background-color: white
 }
 
+.addItemButton {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  background-color: white
+}
+
+.submitItem, .closeCreate {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width: 50%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  background-color: #45b3e0;
+}
+
 .newBudget {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
@@ -127,7 +165,7 @@ li.navbar, .closeContainer {
   background-color: white
 }
 
-.viewBudget:hover, .newBudget:hover {
+.viewBudget:hover, .newBudget:hover, .addItemButton:hover, .submitItem:hover {
   box-shadow: 0 8px 16px 0 #87ceeb;
   background-color: #4CAF50;
   font-size: 15px;
@@ -168,7 +206,7 @@ li.navbar, .closeContainer {
   color: white;
 }
 
-.delete:hover {
+.delete:hover, .closeCreate:hover {
   box-shadow: 0 8px 16px 0 #87ceeb;
   background-color: red;
   font-size: 15px;
@@ -189,7 +227,7 @@ li.navbar, .closeContainer {
     opacity: 0;
 }
 
-.login  {
+.login {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   width: 80px;
@@ -241,6 +279,19 @@ li.navbar, .closeContainer {
   vertical-align: middle;
 }
 
+.newItemForm  {
+  transition: 0.3s;
+  background-color: #45b3e0;
+  display: inline-block;
+  border: 5px #c9e9f6 solid;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 0px;
+  width: 88%;
+  text-align: center;
+  vertical-align: middle;
+}
+
 .registerCard {
   transition: 0.3s;
   background-color: #c9e9f6;
@@ -266,8 +317,16 @@ li.navbar, .closeContainer {
   text-align: center;
 }
 
+.itemsAndGraphContainer, .budgetTotalsContainer {
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-between;
+}
 
-
+.budgetGraph {
+  width: 500px;
+  border: 10px solid white;
+}
 
 
 

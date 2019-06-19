@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal'
+import {Doughnut} from 'react-chartjs-2';
 require('../App.css')
 
 const customStyles = {
@@ -38,7 +39,7 @@ class BudgetView extends Component {
 		})
 	}
 	componentWillUnmount() {
-		
+
 	}
 	getBudget = async () => {
 		const budget = await fetch(process.env.REACT_APP_URL + '/budget/' + this.state.budgetId, {
@@ -109,7 +110,51 @@ class BudgetView extends Component {
 						</div>
 					</div>
 				)
-			})
+		})
+		const itemNames = this.state.budgetItems.map(item => item.itemName)
+
+		const itemAmount = this.state.budgetItems.map(item => item.amount)
+
+		let amounts = []
+
+		amounts = itemAmount
+
+		const totalAmount = amounts.reduce((accum, currVal) => {
+			return accum +currVal
+		}, 0)
+
+		let remainingFunds = this.props.budgetToView.netMonthlyIncome - totalAmount
+
+		const data = {
+			labels: itemNames,
+			datasets: [{
+				data: itemAmount,
+				backgroundColor: [
+					'#88bdbc',
+					'#254e58',
+					'#112d32',
+					'#4f4a41',
+					'#6e6658',
+					'#88bdbc',
+					'#254e58',
+					'#112d32',
+					'#4f4a41',
+					'#6e6658'
+				],
+				hoverBackgroundColor: [
+					'#88bdbc',
+					'#254e58',
+					'#112d32',
+					'#4f4a41',
+					'#6e6658',
+					'#88bdbc',
+					'#254e58',
+					'#112d32',
+					'#4f4a41',
+					'#6e6658'
+				]
+			}]
+		}
 		
 		return (
 			<Modal 
@@ -119,45 +164,72 @@ class BudgetView extends Component {
 				onRequestClose={this.props.budgetViewToggle}>
 				<div className='closeContainer'>
 					<div className='closeModal'>
-						<button className='modalClose' onClick={this.props.budgetViewToggle}>X</button>
+						<button className='modalClose' onClick={this.props.budgetViewToggle}>+</button>
 					</div>
 				</div>
-				<div className='budgetInfoCard'>
-					<div className='budgetInfoContainer'>
-						<span className='income'>Budget Name:</span>
-		      			<br/>
-						<div className='info'>
-							<span>{this.props.budgetToView.budgetName}</span>
-						</div>
-		      			<br/>
-						<span className='income'>Net Income:</span>
-		      			<br/>
-				      	<div className='info'>
-				      		<span>{this.props.budgetToView.netMonthlyIncome.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })}</span>
+				<div className='budgetTotalsContainer'>
+					<div className='budgetInfoCard'>
+						<div className='budgetInfoContainer'>
+							<span className='income'>Budget Name:</span>
+			      			<br/>
+							<div className='info'>
+								<span>{this.props.budgetToView.budgetName}</span>
+							</div>
+			      			<br/>
+							<span className='income'>Net Income:</span>
+			      			<br/>
+					      	<div className='info'>
+					      		<span>{this.props.budgetToView.netMonthlyIncome.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })}</span>
+					      	</div>
 				      	</div>
-			      	</div>
-			    </div>
-		      	<br/>
+				    </div>
+		    		<div className='budgetCalcCard'>
+		    			<div className='budgetCalcInfoContainer'>
+			    			<span className='income'>Total Expenses:</span>
+			      			<br/>
+							<div className='info'>
+								<span>{totalAmount.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })}</span>
+							</div>
+			      			<br/>
+							<span className='income'>Available Funds:</span>
+			      			<br/>
+					      	<div className='info'>
+					      		<span>{remainingFunds.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })}</span>
+					      	</div>
+		    			</div>
+		    		</div>
+				</div>
+				<br/>
 				<br/>
 				<label className='budgetLabel'>Expenses:</label>
 				<br/>
 				<br/>
-	      		{budgetItems}
-		      	<br/>
-		      	<br/>
-		      	{this.state.createItem ?
-		      	<form onSubmit={this.createBudgetItem}>
-		      		<label>Item Name</label>
-		      		<br/>
-		      		<input type='text' name='itemName' onChange={this.handleChange}></input>
-		      		<br/>
-		      		<label>Monthly Cost</label>
-		      		<br/>
-		      		<input type='text' name='itemAmount' onChange={this.handleChange}></input>
-		      		<br/>
-		      		<input type='submit'/>
-		      	</form>
-		      	: <button onClick={this.createItemToggle}>Add an Expense?</button>}
+				<div className='itemsAndGraphContainer'>
+					<div>
+		      			{budgetItems}
+				      	{this.state.createItem ?
+				      	<div className='newItemForm'>
+					      	<form onSubmit={this.createBudgetItem}>
+					      		<label>Item Name</label>
+					      		<br/>
+					      		<input type='text' name='itemName' onChange={this.handleChange}></input>
+					      		<br/>
+					      		<label>Monthly Cost</label>
+					      		<br/>
+					      		<input type='text' name='itemAmount' onChange={this.handleChange}></input>
+					      		<br/>
+					      		<div className='buttonContainer'>
+						      		<button className='submitItem' type='submit'>Create</button>
+						      		<button className='closeCreate' onClick={this.createItemToggle}>Close</button>
+						      	</div>
+					      	</form>
+					    </div>
+				      	: <button className='addItemButton' onClick={this.createItemToggle}>Add an Expense?</button>}
+		      		</div>
+			      	<div className='budgetGraph'>
+			      		<Doughnut data={data} />
+			      	</div>
+			    </div>
 		    </Modal>
 		)
 	}
