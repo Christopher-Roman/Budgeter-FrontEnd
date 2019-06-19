@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal'
-import {Bar} from 'react-chartjs-2';
+import {Doughnut} from 'react-chartjs-2';
 import { defaults } from 'react-chartjs-2'
-defaults.global.legend.display = false;
+// defaults.global.legend.display = false;
 require('../App.css')
 
 const customStyles = {
@@ -122,7 +122,7 @@ class BudgetView extends Component {
 		amounts = itemAmount
 
 		const totalAmount = amounts.reduce((accum, currVal) => {
-			return accum +currVal
+			return accum + currVal
 		}, 0)
 
 		let remainingFunds = this.props.budgetToView.netMonthlyIncome - totalAmount
@@ -131,11 +131,6 @@ class BudgetView extends Component {
 			labels: itemNames,
 			datasets: [{
 				data: itemAmount,
-				options: {
-			        legend: {
-			            display: false
-			        }
-			    },
 				backgroundColor: [
 					'#88bdbc',
 					'#254e58',
@@ -162,7 +157,29 @@ class BudgetView extends Component {
 				]
 			}]
 		}
-		
+		const options = {
+	    	legend: {
+	    		display: true,
+	    		fontColor: 'green'
+	    	},
+	    	responsive: true,
+	    	maintainAspectRatio: true,
+	    	tooltips: {
+		      displayColors: false,
+		      titleFontSize: 16,
+		      bodyFontSize: 14,
+		      xPadding: 10,
+		      yPadding: 10
+		  	}
+	        // scales: {
+	        //     yAxes: [{
+	        //         ticks: {
+	        //             beginAtZero:true,
+	        //             stepSize: 200
+	        //         }
+	        //     }]
+	        // }
+		}
 		return (
 			<Modal 
 				closeTimeoutMS={1000}
@@ -234,7 +251,7 @@ class BudgetView extends Component {
 				      	: <button className='addItemButton' onClick={this.createItemToggle}>Add an Expense?</button>}
 		      		</div>
 			      	<div className='budgetGraph'>
-			      		<Bar data={data} />
+			      		<Doughnut data={data} options={options} />
 			      	</div>
 			    </div>
 		    </Modal>
