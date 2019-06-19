@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal'
-import {Doughnut} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
+import { defaults } from 'react-chartjs-2'
+defaults.global.legend.display = false;
 require('../App.css')
 
 const customStyles = {
@@ -129,6 +131,11 @@ class BudgetView extends Component {
 			labels: itemNames,
 			datasets: [{
 				data: itemAmount,
+				options: {
+			        legend: {
+			            display: false
+			        }
+			    },
 				backgroundColor: [
 					'#88bdbc',
 					'#254e58',
@@ -227,7 +234,7 @@ class BudgetView extends Component {
 				      	: <button className='addItemButton' onClick={this.createItemToggle}>Add an Expense?</button>}
 		      		</div>
 			      	<div className='budgetGraph'>
-			      		<Doughnut data={data} />
+			      		<Bar data={data} />
 			      	</div>
 			    </div>
 		    </Modal>

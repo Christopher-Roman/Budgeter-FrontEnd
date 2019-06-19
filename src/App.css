@@ -324,8 +324,8 @@ li.navbar, .closeContainer {
 }
 
 .budgetGraph {
-  width: 500px;
-  border: 10px solid white;
+  width: 700px;
+  background-color: #c9e9f6;
 }
 
 
