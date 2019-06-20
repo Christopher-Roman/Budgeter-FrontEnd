@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal'
 import {Doughnut} from 'react-chartjs-2';
-import { defaults } from 'react-chartjs-2'
+// import { defaults } from 'react-chartjs-2'
 // defaults.global.legend.display = false;
 require('../App.css')
 
@@ -160,10 +160,9 @@ class BudgetView extends Component {
 		const options = {
 	    	legend: {
 	    		display: true,
-	    		fontColor: 'green'
 	    	},
 	    	responsive: true,
-	    	maintainAspectRatio: true,
+	    	maintainAspectRatio: false,
 	    	tooltips: {
 		      displayColors: false,
 		      titleFontSize: 16,
@@ -251,7 +250,7 @@ class BudgetView extends Component {
 				      	: <button className='addItemButton' onClick={this.createItemToggle}>Add an Expense?</button>}
 		      		</div>
 			      	<div className='budgetGraph'>
-			      		<Doughnut data={data} options={options} />
+			      		<Doughnut data={data} options={options} height={300} width={300} />
 			      	</div>
 			    </div>
 		    </Modal>

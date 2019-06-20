@@ -65,7 +65,7 @@ class BudgetContainer extends Component {
 				})
 			}
 		})
-	} 
+	}
 	openBudgetModal = () => {
 		this.setState({
 			createBudget: true
@@ -141,9 +141,11 @@ class BudgetContainer extends Component {
 				}
 			})
 			const parsedResponse = await deletedBudget.json()
+			let budgets = parsedResponse.data.budget
+			console.log(budgets);
 			console.log(parsedResponse);
 			this.setState({
-				budgets: [...parsedResponse.data.budget]
+				budgets: budgets
 			})
 		} catch(err) {
 			console.error(err)
