@@ -12,7 +12,7 @@ const UnderConstruction = (props) => {
 			<div className='construction'>
 				<div className='constructionCard'>
 					<h1>Welcome to Budget<span className='namesake'>ER</span></h1>
-			        <span>This is a personal project that I have been working on in my free time. I have always found it helpful to have a budget to help me manage my finances. I would normally use Excel to build my budgets, but not everyone is familiar with how to use Excel. That is where this site comes in to help gain control of our finances.</span>
+			        <span>This is a personal project that I have been working on in my free time. I have always found it helpful to have a budget to easily manage my finances. I would normally use Excel to build my budgets, but not everyone is familiar with how to use Excel. That is where this site comes in. It is meant for anyone who isn't familiar with Excel but still want an oportunity to gain control of their finances.</span>
 			        	<br/>
 			        	<br/>
 			        	<span>The app currently has partial CRUD functionality. For those who aren't familiar with that acronym, CRUD stands for Create, Read, Update, Delete. I have partial CRUD on most models, and the remaining functionality will be introduced over time.</span>
