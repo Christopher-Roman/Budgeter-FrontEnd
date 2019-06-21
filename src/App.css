@@ -162,6 +162,7 @@ li.navbar, .closeContainer {
   text-decoration: none;
   display: inline-block;
   font-size: 10px;
+  height: 60px;
   background-color: white
 }
 
@@ -189,6 +190,7 @@ li.navbar, .closeContainer {
   text-decoration: none;
   display: inline-block;
   font-size: 10px;
+  height: 50px;
   background-color: #45b3e0;
   color: #f3fafd;
   border: 3px solid #c9e9f6;
@@ -236,6 +238,7 @@ li.navbar, .closeContainer {
   text-decoration: none;
   display: inline-block;
   font-size: 10px;
+  height: 30px;
   background-color: #c9e9f6;
 }
 
@@ -258,6 +261,7 @@ li.navbar, .closeContainer {
   transition-duration: 0.4s;
   width: 80px;
   padding: 1px;
+  padding-left: 2px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

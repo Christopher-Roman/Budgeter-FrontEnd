@@ -21,10 +21,11 @@ Modal.setAppElement('#root')
 
 class BudgetContainer extends Component {
 	_isMounted = false;
-	constructor(){
+	constructor(props){
 		super();
 		this.state = {
 			budgetName: '',
+			username: '',
 			netMonthlyIncome: '',
 			budgets: [],
 			budgetItems: [],
@@ -57,7 +58,8 @@ class BudgetContainer extends Component {
 				let budgetArray = budgets.data[0].budget
 				this.setState({
 					budgets: [...budgetArray],
-					activeBudget: true
+					activeBudget: true,
+					username: budgets.data[0].username
 				})
 			} else {
 				this.setState({
@@ -159,7 +161,7 @@ class BudgetContainer extends Component {
 			<div>
 				<div className='welcomeCard'>
 					<div className='welcomeContainer' >
-					{this.state.activeBudget ? <span>Hello, {this.props.userInfo.username}, ready to get started on a new budget?</span> : <span>Hello, {this.props.userInfo.username}, ready to continue working on your budget?</span>}
+					{this.state.activeBudget ? <span>Hello, {this.state.username}, ready to get started on a new budget?</span> : <span>Hello, {this.props.userInfo.username}, ready to continue working on your budget?</span>}
 					</div>
 				</div>
 				<Budget userInfo={this.props.userInfo} budgetInfo={this.state.budgets} openBudget={this.budgetViewToggle} budgetViewModal={this.state.budgetViewModal} deleteBudget={this.deleteBudget} />
