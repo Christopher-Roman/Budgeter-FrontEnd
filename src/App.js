@@ -3,6 +3,7 @@ import Register from './Register'
 import Login from './Login'
 import BudgetContainer from './BudgetContainer'
 import HeaderApp from './Header'
+import UnderConstruction from './UnderConstruction'
 require('./App.css')
 
 
@@ -14,7 +15,8 @@ class App extends Component {
       password: '',
       loggedIn: false,
       loginFail: false,
-      register: false
+      register: false,
+      confirmed: false
     }
   }
   handleLogout = async (e) => {
@@ -41,6 +43,12 @@ class App extends Component {
     } catch(err) {
       console.error(err)
     }
+  }
+  confirmConstruction = (e) => {
+    e.preventDefault()
+    this.setState({
+      confirmed: true
+    })
   }
   handleSubmit = async (e) => {
     e.preventDefault();
@@ -107,9 +115,10 @@ class App extends Component {
           </div>
         </div>
           <div className='container'>
-            {!this.state.loggedIn && !this.state.loginFail && !this.state.register ? <Login registration={this.register} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> : null }
+            {!this.state.confirmed ? <UnderConstruction confirmed={this.confirmConstruction}/> : null}
+            {!this.state.loggedIn && !this.state.loginFail && !this.state.register && this.state.confirmed ? <Login registration={this.register} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> : null }
             {this.state.register || this.state.loginFail ? <Register haveAnAccount={this.haveAnAccount} loggedIn={this.loggedIn} register={this.register} userInfo={this.state} /> : null}
-            {this.state.loggedIn && !this.state.loginFail && !this.state.register ? <BudgetContainer handleChange={this.handleChange} userInfo={this.state} /> : null }
+            {this.state.loggedIn && !this.state.loginFail && this.state.confirmed ? <BudgetContainer handleChange={this.handleChange} userInfo={this.state} /> : null }
           </div>
       </div>
     )

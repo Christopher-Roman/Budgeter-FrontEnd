@@ -142,8 +142,6 @@ class BudgetContainer extends Component {
 			})
 			const parsedResponse = await deletedBudget.json()
 			let budgets = parsedResponse.data.budget
-			console.log(budgets);
-			console.log(parsedResponse);
 			this.setState({
 				budgets: budgets
 			})

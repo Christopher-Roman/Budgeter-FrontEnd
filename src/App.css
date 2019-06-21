@@ -239,6 +239,20 @@ li.navbar, .closeContainer {
   background-color: #c9e9f6;
 }
 
+.constructionButton {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width: 80px;
+  padding: 1px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  height: 30px;
+  background-color: #45b3e0;
+
+}
+
 .register {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
@@ -258,11 +272,11 @@ li.navbar, .closeContainer {
   background-color: #c9e9f6; 
 }
 
-.register:hover {
+.register:hover, .constructionButton:hover {
   font-size: 15px;
   color: black;
   font-weight: bold;
-  background-color: #45b3e0; 
+  background-color: #c9e9f6; 
 }
 
 .loginCard {
@@ -328,5 +342,21 @@ li.navbar, .closeContainer {
   background-color: #c9e9f6;
 }
 
+.image {
+  max-width: 500px;
+  max-height: 500px;
+}
 
+.construction {
+  transition: 0.3s;
+  background-color: #c9e9f6;
+  display: inline-block;
+  border: 15px #45b3e0 solid;
+  text-align: center;
+  padding: 10px;
+  width: 75%;
+  height: 33%;
+  text-align: center;
+  vertical-align: middle;
+}
 
