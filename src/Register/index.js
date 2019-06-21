@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 require('../App.css')
 
+
+
+//*****************************************//
+//                                         //
+//      Registration component with        //
+//      conditional rendering in App.js    //
+//                                         //
+//*****************************************//
+
 class Register extends Component {
 	constructor() {
 		super();

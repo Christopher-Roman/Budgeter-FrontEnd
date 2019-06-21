@@ -1,6 +1,14 @@
 import React from 'react';
 require('../App.css')
 
+
+//*****************************************//
+//										   //
+//		Simple login component being  	   //
+//		Conditional rendering in App.js	   //
+//										   //
+//*****************************************//
+
 const Login = (props) => {
 	return (
 		<div>

@@ -3,14 +3,27 @@ import Modal from 'react-modal'
 import {Doughnut} from 'react-chartjs-2';
 // import { defaults } from 'react-chartjs-2'
 // defaults.global.legend.display = false;
+
+//*****************************************//
+//										   //
+//		View of specifically selected	   //
+//		budget and items listed within     //
+//		selected budget					   //
+//		Conditional rendering in    	   //
+//		BudgetContainer.             	   //
+//										   //
+//*****************************************//
+
 require('../App.css')
 
+//Styles for Modal
 const customStyles = {
   content : {
-    backgroundColor		  : 'rgba(69,179,224)'
+    backgroundColor: 'rgba(69,179,224)'
   }
 };
 
+// Allows Accessibility Reading
 Modal.setAppElement('#root')
 
 

@@ -1,6 +1,13 @@
 import React from 'react';
 require('../App.css')
 
+//*****************************************//
+//										   //
+//		Map through user budgets to be	   //
+//		rendering in the BudgetContainer   //
+//										   //
+//*****************************************//
+
 const Budget = (props) => {
 	let response = null
 	if(props.budgetInfo.length <= 0) {

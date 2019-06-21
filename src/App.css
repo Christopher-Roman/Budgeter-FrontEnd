@@ -242,7 +242,7 @@ li.navbar, .closeContainer {
   background-color: #c9e9f6;
 }
 
-.constructionButton {
+.constructionButton, .register {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   width: 80px;
@@ -254,19 +254,6 @@ li.navbar, .closeContainer {
   height: 30px;
   background-color: #45b3e0;
 
-}
-
-.register {
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  width: 80px;
-  padding: 1px;
-  padding-left: 2px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 10px;
-  background-color: #45b3e0;
 }
 
 .login:hover {

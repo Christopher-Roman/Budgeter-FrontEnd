@@ -4,7 +4,15 @@ import Budget from '../Budget'
 import BudgetView from '../BudgetView'
 require('../App.css')
 
+//*****************************************//
+//										   //
+//		Primary container for the user's   //
+//		created budgets and other info     //
+//		Conditional rendering in App.js	   //
+//										   //
+//*****************************************//
 
+//Styles for Modal
 const customStyles = {
   content : {
     top                   : '50%',
@@ -17,6 +25,7 @@ const customStyles = {
   }
 };
 
+// Allows Accessibility Reading
 Modal.setAppElement('#root')
 
 class BudgetContainer extends Component {

@@ -1,13 +1,21 @@
 import React from 'react';
 require('../App.css')
 
+//*****************************************//
+//										   //
+//		Landing page for the site while	   //
+//		it is still under construction.    //
+//		Conditional rendering in App.js	   //
+//										   //
+//*****************************************//
+
+
 
 const UnderConstruction = (props) => {
-	console.log(props);
 	return (
 		<div>
 			<div className='imageContainer'>
-				<img className='image' src={require('../BudgetERLogo.png')} />
+				<img alt='Budget E.R. Logo' className='image' src={require('../BudgetERLogo.png')} />
 			</div>
 			<div className='construction'>
 				<div className='constructionCard'>

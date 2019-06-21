@@ -1,6 +1,17 @@
 import React from 'react';
 require('../App.css')
 
+
+//*****************************************//
+//										   //
+//		Simple header component that 	   //
+//		will offer additional options      //
+//		as the site is built out.		   //
+//		Rendered in App.js				   //
+//										   //
+//*****************************************//
+
+
 const HeaderApp = (props) => {
 	return (
 		<div>
