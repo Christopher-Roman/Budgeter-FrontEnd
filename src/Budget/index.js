@@ -28,6 +28,7 @@ const Budget = (props) => {
 							<br/>
 							<div className='buttonContainer'>
 								<button className='viewBudget' onClick={props.openBudget.bind(null, budget)}>View</button>
+								<button className='viewBudget' onClick={props.openAndEditBudget.bind(null, budget)}>Edit</button>
 								<button className='delete' onClick={props.deleteBudget.bind(null, budget._id)}>Delete</button>
 							</div>
 						</div>

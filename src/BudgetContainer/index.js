@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-modal'
 import Budget from '../Budget'
 import BudgetView from '../BudgetView'
+import EditBudgetModal from '../EditBudgetModal'
 require('../App.css')
 
 //*****************************************//
@@ -46,7 +47,16 @@ class BudgetContainer extends Component {
       			budgetName: '',
       			netMonthlyIncome: '',
       			budgetItems: [],
-      			budgetScenarios: []
+      			scenarios: [],
+      			_id: ''
+      		},
+      		editBudgetModal: false,
+      		budgetToEdit: {
+      			budgetName: '',
+      			netMonthlyIncome: '',
+      			budgetItems: [],
+      			scenarios: [],
+      			_id: ''
       		}
 		}
 	}
@@ -66,7 +76,7 @@ class BudgetContainer extends Component {
 			if(budgets.status === 200) {
 				let budgetArray = budgets.data[0].budget
 				this.setState({
-					budgets: [...budgetArray],
+					budgets: budgetArray,
 					activeBudget: true,
 					username: budgets.data[0].username
 				})
@@ -102,6 +112,48 @@ class BudgetContainer extends Component {
 		} catch(err) {
 			console.error(err)
 		}
+	}
+	openAndEditBudget = (budget) => {
+		this.setState({
+			editBudgetModal: true,
+			budgetToEdit: {
+      			...budget
+			}
+		})
+	}
+	closeAndUpdateBudget = async (e) => {
+		e.preventDefault()
+		try {
+			const parsedNetMonthlyIncome = parseInt(this.state.budgetToEdit.netMonthlyIncome)
+			const editBudget = await fetch(process.env.REACT_APP_URL + '/budget/' + this.state.budgetToEdit._id + '/update', {
+				method: 'PUT',
+				credentials: 'include',
+				body: JSON.stringify({
+					budgetName: this.state.budgetToEdit.budgetName,
+					netMonthlyIncome: parsedNetMonthlyIncome
+
+				}),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			this.getBudget().then(budgets => {
+				if(budgets.status === 200) {
+					let budgetArray = budgets.data[0].budget
+					this.setState({
+						budgets: budgetArray,
+						editBudgetModal: false
+					})
+				}
+			})
+		} catch(err) {
+			console.error(err)
+		}
+	}
+	closeEditBudgetModal = () => {
+		this.setState({
+			editBudgetModal: false
+		})
 	}
 	budgetViewToggle = (budget) => {
 		if(!this.state.budgetViewModal) {
@@ -165,6 +217,14 @@ class BudgetContainer extends Component {
 	      [e.currentTarget.name]: e.currentTarget.value
 	    })
   	}
+  	handleBudgetEditChange = (e) => {
+  		this.setState({
+  			budgetToEdit: {
+  				...this.state.budgetToEdit,
+  				[e.currentTarget.name]: e.currentTarget.value
+  			}
+  		})
+  	}
 	render() {
 		return (
 			<div>
@@ -173,9 +233,12 @@ class BudgetContainer extends Component {
 					{this.state.activeBudget ? <span>Hello, {this.state.username}, ready to get started on a new budget?</span> : <span>Hello, {this.props.userInfo.username}, ready to continue working on your budget?</span>}
 					</div>
 				</div>
-				<Budget userInfo={this.props.userInfo} budgetInfo={this.state.budgets} openBudget={this.budgetViewToggle} budgetViewModal={this.state.budgetViewModal} deleteBudget={this.deleteBudget} />
+				<Budget userInfo={this.props.userInfo} budgetInfo={this.state.budgets} openBudget={this.budgetViewToggle} openAndEditBudget={this.openAndEditBudget} budgetViewModal={this.state.budgetViewModal} deleteBudget={this.deleteBudget} />
 				{this.state.budgetViewModal ? <BudgetView budgetViewToggle={this.budgetViewToggle} budgetToView={this.state.budgetToView} budgetViewModal={this.state.budgetViewModal} /> : null}
-				
+
+				{this.state.editBudgetModal ? <EditBudgetModal closeAndUpdateBudget={this.closeAndUpdateBudget} handleBudgetEditChange={this.handleBudgetEditChange} editModal={this.state.editBudgetModal} closeEditBudgetModal={this.closeEditBudgetModal} budgetToEdit={this.state.budgetToEdit} /> : null}
+
+
 				<br/>
 				<br/>
 				<br/>

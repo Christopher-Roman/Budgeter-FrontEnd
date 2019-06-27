@@ -4,7 +4,7 @@ require('../App.css')
 
 //*****************************************//
 //										   //
-//		Simple login component being  	   //
+//		Stateless login component with     //
 //		Conditional rendering in App.js	   //
 //										   //
 //*****************************************//
