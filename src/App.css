@@ -47,6 +47,7 @@ li.navbar, .closeContainer {
 .itemCard, .card {
   transition: 0.3s;
   min-width: 100px;
+  max-width: 150px;
   max-height: 100px;
   border: 5px #c9e9f6 solid;
   display: inline-block;
@@ -98,7 +99,7 @@ li.navbar, .closeContainer {
 
 .buttonContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .budgetInfoContainer {
@@ -352,48 +353,65 @@ li.navbar, .closeContainer {
 }
 
 .itemEditButton, .itemDeleteButton {
- /* height: 0px;
+  height: 0px;
   width: 0px;
-  padding: 0px;*/
+  padding: 0px;
   opacity: 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
 }
 
 
 
 .itemCard:hover button.itemEditButton {
-  transition: 0.3s;
-  box-shadow: 0 8px 16px 0 #87ceeb;
-  background-color: #4CAF50;
-  font-size: 10px;
-  color: black;
-  font-weight: bold;
-  opacity: 1;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
   width: 49%;
+  padding: 1px;
   text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  height: auto;
+  background-color: #4CAF50;
+  opacity: 1;
 }
 
 .itemCard:hover button.itemDeleteButton {
-  transition: 0.3s;
-  box-shadow: 0 8px 16px 0 #87ceeb;
-  background-color: red;
-  font-size: 10px;
-  color: black;
-  font-weight: bold;
-  opacity: 1;
-  width: 49%;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width: 44%;
+  padding: 1px;
   text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  height: auto;
+  background-color: red;
+  opacity: 1;
 }
 
 .itemCard:hover {
   background-color: #c9e9f6;
   color: #c9e9f6;
+  max-width: 130px;
+  border: solid #c9e9f6 5px;
+  padding-left: 10px;
+  padding-right: -10px
+}
 
+.itemButtonContainer {
+  display: flex;
+  justify-content: space-around;
 }
 
 
-
-
-
+.overspent {
+  color: #ab0000;
+  text-decoration-color: #ab0000;
+  font-size: 20px;
+}
 
 
 

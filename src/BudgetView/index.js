@@ -105,7 +105,6 @@ class BudgetView extends Component {
 				}
 			})
 			const parsedResponse = await deletedBudgetItem.json()
-			console.log(parsedResponse);
 			let budgetItems = parsedResponse.data.budgetItem
 			this.setState({
 				budgetItems: budgetItems
@@ -140,10 +139,10 @@ class BudgetView extends Component {
 						    <b>Item:</b> <span> </span>{budgetItems.itemName} 
 						    <br/>
 						    <b>Cost:</b> <span> </span>{budgetItems.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })} 
-						    <div className='buttonContainer'>
-							    <button className='itemEditButton' >Edit</button>
-							    <button className='itemDeleteButton' onClick={this.deleteBudgetItem.bind(null, budgetItems._id)}>Delete</button>
-							</div>
+						  </div>
+						  <div className='itemButtonContainer'>
+							  <button className='itemEditButton' >Edit</button>
+							  <button className='itemDeleteButton' onClick={this.deleteBudgetItem.bind(null, budgetItems._id)}>Delete</button>
 						  </div>
 						</div>
 					</div>
@@ -161,7 +160,13 @@ class BudgetView extends Component {
 			return accum + currVal
 		}, 0)
 
+		let negativeBalance = ''
+
 		let remainingFunds = this.props.budgetToView.netMonthlyIncome - totalAmount
+
+		if(remainingFunds < 0) {
+			negativeBalance = 'overspent'
+		}
 
 		const data = {
 			labels: itemNames,
@@ -245,7 +250,7 @@ class BudgetView extends Component {
 							<span className='income'>Available Funds:</span>
 			      			<br/>
 					      	<div className='info'>
-					      		<span>{remainingFunds.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })}</span>
+					      		<span className={negativeBalance}>{remainingFunds.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })}</span>
 					      	</div>
 		    			</div>
 		    		</div>
