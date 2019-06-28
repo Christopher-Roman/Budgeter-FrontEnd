@@ -95,6 +95,25 @@ class BudgetView extends Component {
 			console.error(err)
 		}
 	}
+	deleteBudgetItem = async (id) => {
+		try {
+			const deletedBudgetItem = await fetch(process.env.REACT_APP_URL + '/budget/' + this.props.budgetToView._id + '/item/' + id + '/delete', {
+				method: 'DELETE',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			const parsedResponse = await deletedBudgetItem.json()
+			console.log(parsedResponse);
+			let budgetItems = parsedResponse.data.budgetItem
+			this.setState({
+				budgetItems: budgetItems
+			})
+		} catch(err) {
+			console.error(err)
+		}
+	}
 	handleChange = (e) => {
 	    this.setState({
 	      [e.currentTarget.name]: e.currentTarget.value
@@ -121,6 +140,10 @@ class BudgetView extends Component {
 						    <b>Item:</b> <span> </span>{budgetItems.itemName} 
 						    <br/>
 						    <b>Cost:</b> <span> </span>{budgetItems.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })} 
+						    <div className='buttonContainer'>
+							    <button className='itemEditButton' >Edit</button>
+							    <button className='itemDeleteButton' onClick={this.deleteBudgetItem.bind(null, budgetItems._id)}>Delete</button>
+							</div>
 						  </div>
 						</div>
 					</div>
@@ -183,14 +206,6 @@ class BudgetView extends Component {
 		      xPadding: 10,
 		      yPadding: 10
 		  	}
-	        // scales: {
-	        //     yAxes: [{
-	        //         ticks: {
-	        //             beginAtZero:true,
-	        //             stepSize: 200
-	        //         }
-	        //     }]
-	        // }
 		}
 		return (
 			<Modal 

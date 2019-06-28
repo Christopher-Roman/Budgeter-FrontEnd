@@ -80,7 +80,7 @@ li.navbar, .closeContainer {
   text-align: left;
 }
 
-.budgetCard:hover, .itemCard:hover, .card:hover {
+.budgetCard:hover, .card:hover {
   background-color: #c9e9f6;
   color: #87ceeb;
 }
@@ -98,7 +98,7 @@ li.navbar, .closeContainer {
 
 .buttonContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .budgetInfoContainer {
@@ -350,4 +350,62 @@ li.navbar, .closeContainer {
   text-align: center;
   vertical-align: middle;
 }
+
+.itemEditButton, .itemDeleteButton {
+ /* height: 0px;
+  width: 0px;
+  padding: 0px;*/
+  opacity: 0;
+}
+
+
+
+.itemCard:hover button.itemEditButton {
+  transition: 0.3s;
+  box-shadow: 0 8px 16px 0 #87ceeb;
+  background-color: #4CAF50;
+  font-size: 10px;
+  color: black;
+  font-weight: bold;
+  opacity: 1;
+  width: 49%;
+  text-align: center;
+}
+
+.itemCard:hover button.itemDeleteButton {
+  transition: 0.3s;
+  box-shadow: 0 8px 16px 0 #87ceeb;
+  background-color: red;
+  font-size: 10px;
+  color: black;
+  font-weight: bold;
+  opacity: 1;
+  width: 49%;
+  text-align: center;
+}
+
+.itemCard:hover {
+  background-color: #c9e9f6;
+  color: #c9e9f6;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
