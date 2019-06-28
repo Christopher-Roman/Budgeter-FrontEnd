@@ -1,6 +1,16 @@
 import React from 'react';
 import Modal from 'react-modal'
 
+//*****************************************//
+//                                         //
+//    View of specifically selected        //
+//    budget listed within the             //
+//    BudgetContainer in order to edit     //
+//    the selected budget. Conditional     //
+//    rendering in BudgetContainer.        //
+//                                         //
+//*****************************************//
+
 const customStyles = {
   content : {
     top                   : '50%',
