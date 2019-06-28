@@ -234,7 +234,7 @@ class BudgetContainer extends Component {
 					</div>
 				</div>
 				<Budget userInfo={this.props.userInfo} budgetInfo={this.state.budgets} openBudget={this.budgetViewToggle} openAndEditBudget={this.openAndEditBudget} budgetViewModal={this.state.budgetViewModal} deleteBudget={this.deleteBudget} />
-				{this.state.budgetViewModal ? <BudgetView budgetViewToggle={this.budgetViewToggle} budgetToView={this.state.budgetToView} budgetViewModal={this.state.budgetViewModal} /> : null}
+				{this.state.budgetViewModal ? <BudgetView openAndEditBudgetItem={this.openAndEditBudgetItem} handleBudgetItemEditChange={this.handleBudgetItemEditChange} budgetItemToEdit={this.state.budgetItemToEdit} budgetViewToggle={this.budgetViewToggle} budgetToView={this.state.budgetToView} budgetViewModal={this.state.budgetViewModal} /> : null}
 
 				{this.state.editBudgetModal ? <EditBudgetModal closeAndUpdateBudget={this.closeAndUpdateBudget} handleBudgetEditChange={this.handleBudgetEditChange} editModal={this.state.editBudgetModal} closeEditBudgetModal={this.closeEditBudgetModal} budgetToEdit={this.state.budgetToEdit} /> : null}
 

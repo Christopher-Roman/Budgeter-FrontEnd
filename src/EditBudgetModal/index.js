@@ -14,7 +14,6 @@ const customStyles = {
 };
 
 const EditBudget = (props) => {
-	console.log(props.budgetToEdit);
 	return (
 		<Modal
 			isOpen={props.editModal} 

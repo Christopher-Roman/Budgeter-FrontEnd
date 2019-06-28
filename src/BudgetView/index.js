@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal'
 import {Doughnut} from 'react-chartjs-2';
+import EditBudgetItemModal from '../EditBudgetItemModal'
 // import { defaults } from 'react-chartjs-2'
 // defaults.global.legend.display = false;
 
@@ -37,7 +38,13 @@ class BudgetView extends Component {
 			itemName: '',
 			itemAmount: '',
 			budgetItems: [],
-			createItem: false
+			createItem: false,
+      		editBudgetItemModal: false,
+      		budgetItemToEdit: {
+      			amount: '',
+      			itemName: '',
+      			_id: ''
+      		}
 		}
 	}
 	componentDidMount(){
@@ -95,6 +102,36 @@ class BudgetView extends Component {
 			console.error(err)
 		}
 	}
+	closeAndUpdateBudgetItem = async (e) => {
+		e.preventDefault();
+		try {
+			const parsedAmount = parseInt(this.state.budgetItemToEdit.amount);
+			const editBudgetItem = await fetch(process.env.REACT_APP_URL + '/budget/' + this.props.budgetToView._id + '/item/' + this.state.budgetItemToEdit._id + '/edit', {
+				method: 'PUT',
+				credentials: 'include',
+				body: JSON.stringify({
+					amount: parsedAmount,
+					itemName: this.state.budgetItemToEdit.itemName
+				}),
+				headers: {
+					'Content-Type':'application/json'
+				}
+			})
+			console.log(editBudgetItem);
+			const parsedResponse = await editBudgetItem.json()
+			this.setState({
+				editBudgetItemModal: false,
+				budgetItems: parsedResponse.data.budgetItem
+			})
+		}catch(err) {
+			console.error(err)
+		}
+	}
+	closeEditBudgetItemModal = () => {
+		this.setState({
+			editBudgetItemModal: false
+		})
+	}
 	deleteBudgetItem = async (id) => {
 		try {
 			const deletedBudgetItem = await fetch(process.env.REACT_APP_URL + '/budget/' + this.props.budgetToView._id + '/item/' + id + '/delete', {
@@ -129,7 +166,24 @@ class BudgetView extends Component {
   			})
   		}
   	}
+  	handleBudgetItemEditChange = (e) => {
+  		this.setState({
+  			budgetItemToEdit: {
+	  			...this.state.budgetItemToEdit,
+	  			[e.currentTarget.name]: e.currentTarget.value
+	  		}
+  		})
+  	}
+	openAndEditBudgetItem = (budgetItem) => {
+		this.setState({
+			editBudgetItemModal: true,
+			budgetItemToEdit: {
+				...budgetItem
+			}
+		})
+	}
 	render() {
+		console.log(this.state.budgetItemToEdit);
 
 		const budgetItems = this.state.budgetItems.map((budgetItems) => {
 				return (
@@ -141,7 +195,7 @@ class BudgetView extends Component {
 						    <b>Cost:</b> <span> </span>{budgetItems.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })} 
 						  </div>
 						  <div className='itemButtonContainer'>
-							  <button className='itemEditButton' >Edit</button>
+							  <button className='itemEditButton' onClick={this.openAndEditBudgetItem.bind(null, budgetItems)}>Edit</button>
 							  <button className='itemDeleteButton' onClick={this.deleteBudgetItem.bind(null, budgetItems._id)}>Delete</button>
 						  </div>
 						</div>
@@ -286,6 +340,7 @@ class BudgetView extends Component {
 			      		<Doughnut data={data} options={options} height={300} width={300} />
 			      	</div>
 			    </div>
+			    {this.state.editBudgetItemModal ? <EditBudgetItemModal handleBudgetItemEditChange={this.handleBudgetItemEditChange} closeAndUpdateBudgetItem={this.closeAndUpdateBudgetItem} closeEditBudgetItemModal={this.closeEditBudgetItemModal} budgetItemToEdit={this.state.budgetItemToEdit} editBudgetItemModal={this.state.editBudgetItemModal}/> : null}
 		    </Modal>
 		)
 	}
